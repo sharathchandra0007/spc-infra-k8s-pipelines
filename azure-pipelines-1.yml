@@ -1,0 +1,22 @@
+# Starter pipeline
+trigger:
+- main
+
+pool: Default
+
+steps:
+  - task: JFrogMaven@1
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'install'
+      artifactoryResolverService: 'JFROG_CLOUD'
+      targetResolveReleaseRepo: 'ptclinic'
+      targetResolveSnapshotRepo: 'ptclinic'
+      artifactoryDeployService: 'JFROG_CLOUD'
+      targetDeployReleaseRepo: 'ptclinic'
+      targetDeploySnapshotRepo: 'ptclinic'
+      javaHomeOption: 'JDKVersion'
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+

@@ -1,0 +1,18 @@
+# Starter pipeline
+trigger:
+- main
+
+pool: Default
+
+steps:
+  - task: JFrogMaven@1
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'install'
+      artifactoryResolverService: 'JFROG_CLOUD'
+      targetResolveReleaseRepo: 'spring-petclinic-libs-release'
+      targetResolveSnapshotRepo: 'spring-petclinic-libs-snapshot'
+      artifactoryDeployService: 'JFROG_CLOUD'
+      targetDeployReleaseRepo: 'spring-petclinic-libs-release'
+      targetDeploySnapshotRepo: 'spring-petclinic-libs-snapshot'
+      javaHomeOption: 'JDKVersion'

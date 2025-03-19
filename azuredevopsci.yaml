@@ -1,0 +1,45 @@
+pool: Default
+
+pr:
+  - develop
+
+stages:
+  - stage: continues_integration
+    jobs:
+      - job: Buildjob
+        displayName: "build and test"
+        steps:
+
+          - task: Maven@4 #to clean the package
+            inputs:
+              mavenPOMFile: 'pom.xml'
+              goals: "clean package" 
+              testResultsFiles: '**/surefire-reports/TEST-*.xml'
+              publishJUnitResults:  "true"
+
+          - task: copyFiles@2 # Copies all .jar files to the Artifact Staging Directory for later use in the build pipeline
+            displayName: "copy scripts"
+            inputs:
+              contents: '**/*.jar'
+              targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+          - task: PublishBuildArtifacts@1 # Publishes the build artifacts from the Artifact Staging Directory to be used in later stages or pipelines
+            inputs:
+              pathToPublish: $(Build.ArtifactStagingDirectory)
+              artifactname: Drop
+
+          - task: Docker@2
+            displayName: "build docker image"
+            inputs:
+              command: 'buildAndPush'
+              Dockerfile: './Dockerfile'
+              repository: "sharathchandra007/spring-petclinic"
+              tags: '$(Build.BuildId)'
+
+              
+
+
+
+
+
+

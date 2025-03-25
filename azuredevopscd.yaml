@@ -1,7 +1,7 @@
 pool: Default
 
-trigger:
-  - rel_v1
+pr:
+ - develop
 
 variables:
   dockerImageName: "sharathchandra007/spring-petclinic"

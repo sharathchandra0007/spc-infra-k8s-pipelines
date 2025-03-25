@@ -23,6 +23,7 @@ stages:
             displayName: 'docker pull command'
             inputs:
               script: | # The script block allows you to specify the commands to execute in the task.
+                echo "Pulling image $(dockerImageName):$(dockerImagetag)"
                 docker pull $(dockerImageName): $(dockerImageTag)
 
           - task: Bash@3

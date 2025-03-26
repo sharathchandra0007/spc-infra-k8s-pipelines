@@ -49,24 +49,17 @@ stages:
               secureFile: 'kubeconfig-file-name'
 
           - task: Bash@3
-            displayName: "Set up Kubeconfig"
+            displayName: "Deploy to Kubernetes"
             inputs:
               targetType: 'inline'
               script: |
-                mkdir -p ~/.kube
-                cp $(System.DefaultWorkingDirectory)/kubeconfig-file-name ~/.kube/config  # Copy to the default kubeconfig location
+                # Set the kubeconfig path
+                export KUBECONFIG=$(System.DefaultWorkingDirectory)/kubeconfig-file-name
 
-          - task: Kubernetes@1
-            displayName: "Deploy to k8s"
-            inputs:
-              kubernetesServiceConnection: ""
-              namespace: "default"
-              command: "apply"
-              useConfigurationFile: true
-              configuration: "spc-deployment.yaml"
-              
-              targetType: "inline"
-              script: |
+                # Apply the Kubernetes deployment file
+                kubectl apply -f spc-deployment.yaml
+
+                # Get all resources
                 kubectl get all
 
 

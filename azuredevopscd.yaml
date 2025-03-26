@@ -42,4 +42,5 @@ stages:
               script: |
                 kubectl apply -f spc-deployment.yaml
                 kubectl get all
+                
                    

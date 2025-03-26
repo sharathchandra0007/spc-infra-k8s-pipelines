@@ -1,9 +1,9 @@
 resource_group_info = {
-  name = "myresourcegroup12"
+  name = "myresourcegroup"
   location = "eastus"
 }
 
 aks_info = {
-  name = "myAKSCluster12"
+  name = "myAKSCluster"
   node_count = 1
 }

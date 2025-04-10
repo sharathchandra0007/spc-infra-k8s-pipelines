@@ -35,39 +35,41 @@ stages:
                terraform apply -var-file="defaults.tfvars" -auto-approve
               workingDirectory: "./infra"   
 
-          # - task: Bash@3
-          #   displayName: "Deploy to k8s"
-          #   inputs:
-          #     targetType: "inline"
-          #     script: |
-          #       kubectl apply -f spc-deployment.yaml
-          #       kubectl get all
-                
-
-          - task: DownloadSecureFile@1  # Download kubeconfig from a secure location
-            inputs:
-              secureFile: 'kubeconfig-file-name'
-
           - task: Bash@3
-            displayName: "Set up Kubeconfig"
-            inputs:
-              targetType: 'inline'
-              script: |
-                mkdir -p ~/.kube
-                cp $(System.DefaultWorkingDirectory)/kubeconfig-file-name ~/.kube/config  # Copy to the default kubeconfig location
-
-          - task: Kubernetes@1
             displayName: "Deploy to k8s"
             inputs:
-              kubernetesServiceConnection: ""
-              namespace: "default"
-              command: "apply"
-              useConfigurationFile: true
-              configuration: "spc-deployment.yaml"
-              
               targetType: "inline"
               script: |
+                kubectl apply -f spc-deployment.yaml
                 kubectl get all
+                
+
+          # - task: DownloadSecureFile@1  # Download kubeconfig from a secure location
+          #   inputs:
+          #     secureFile: 'kubeconfig-file-name'
+
+          # - task: Bash@3
+          #   displayName: "Set up Kubeconfig"
+          #   inputs:
+          #     targetType: 'inline'
+          #     script: |
+          #       mkdir -p ~/.kube
+          #       cp $(System.DefaultWorkingDirectory)/kubeconfig-file-name ~/.kube/config  # Copy to the default kubeconfig location
+
+          # - task: Kubernetes@1
+          #   displayName: "Deploy to k8s"
+          #   inputs:
+          #     kubernetesServiceConnection: ""
+          #     namespace: "default"
+          #     command: "apply"
+          #     useConfigurationFile: true
+          #     configuration: "spc-deployment.yaml"
+              
+          #     targetType: "inline"
+          #     script: |
+          #       kubectl get all
+
+
 
 
                     

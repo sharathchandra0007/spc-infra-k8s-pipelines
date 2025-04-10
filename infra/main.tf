@@ -27,7 +27,7 @@ resource "null_resource" "cluster" {
         build_id = var.build_id
 
     provisioner = "local-exec" # Execute a local command to get AKS credentials using Azure CLI
-        command = "az aks get-credentials --name ${azurerm_kubernetes_cluster.base.name} --resource-group ${azurerm_resource_group.base.name}"
+        command = "az aks get-credentials --resource-group ${azurerm_resource_group.base.name} --name ${azurerm_kubernetes_cluster.base.name}"
     }
 
     depends_on = [ azurerm_kubernetes_cluster.base ]

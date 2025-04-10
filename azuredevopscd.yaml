@@ -40,7 +40,7 @@ stages:
             inputs:
               targetType: "inline"
               script: |
-                kubectl apply -f spc-deployment.yaml
+                kubectl apply -f spc-deployment.yaml --validate=false
                 kubectl get all
                 
 

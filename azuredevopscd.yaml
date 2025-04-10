@@ -32,8 +32,8 @@ stages:
               targetType: "inline"
               script: |
                 terraform init 
-                terraform apply -var-file="defaults.tfvars" -auto-approve
-              workingDirectory: "./infra"   
+                terraform apply -var-file="test.tfvars" -auto-approve
+              workingDirectory: "./terra"   
 
           - task: Bash@3
             displayName: "Deploy to k8s"

@@ -41,7 +41,14 @@ stages:
               targetType: "inline"
               script: |
                 kubectl apply -f spc-deployment.yaml
+            displayName: "Deploy to Kubernetes"
+            inputs:
+              targetType: "inline"
+              script: |
+                kubectl apply -f spc-deployment.yaml
                 kubectl get all
+                
+
 
 
             # displayName: "Deploy to Kubernetes"

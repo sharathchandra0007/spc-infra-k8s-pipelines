@@ -41,6 +41,17 @@ stages:
               targetType: "inline"
               script: |
                 kubectl apply -f spc-deployment.yaml
+            displayName: "Deploy to Kubernetes"
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Set the kubeconfig path
+                export KUBECONFIG=$(System.DefaultWorkingDirectory)/kubeconfig-file-name
+
+                # Apply the Kubernetes deployment file
+                kubectl apply -f spc-deployment.yaml
+
+                # Get all resources
                 kubectl get all
                 
 

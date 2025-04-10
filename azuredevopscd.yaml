@@ -35,20 +35,12 @@ stages:
                terraform apply -var-file="defaults.tfvars" -auto-approve
               workingDirectory: "./infra"   
 
-          # - task: Bash@3
-          #   displayName: "Deploy to k8s"
-          #   inputs:
-          #     targetType: "inline"
-          #     script: |
-          #       kubectl apply -f spc-deployment.yaml
-          #       kubectl get all
-                
-
-          - task: DownloadSecureFile@1  # Download kubeconfig from a secure location
-            inputs:
-              secureFile: 'kubeconfig-file-name'
-
           - task: Bash@3
+            displayName: "Deploy to k8s"
+            inputs:
+              targetType: "inline"
+              script: |
+                kubectl apply -f spc-deployment.yaml
             displayName: "Deploy to Kubernetes"
             inputs:
               targetType: 'inline'
@@ -61,6 +53,8 @@ stages:
 
                 # Get all resources
                 kubectl get all
+                
+
 
 
                     

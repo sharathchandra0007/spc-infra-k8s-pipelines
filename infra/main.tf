@@ -20,13 +20,14 @@ identity {
     type = "SystemAssigned"  # Using a system-assigned managed identity for authentication
   
 }
+    depends_on = [ azurerm_resource_group.base ]
 }
 
 resource "null_resource" "cluster" {
     triggers = {
         build_id = var.build_id
-
-    provisioner = "local-exec" # Execute a local command to get AKS credentials using Azure CLI
+}
+provisioner "local-exec" {  # Execute a local command to get AKS credentials using Azure CLI
         command = "az aks get-credentials --resource-group ${azurerm_resource_group.base.name} --name ${azurerm_kubernetes_cluster.base.name}"
     }
 
